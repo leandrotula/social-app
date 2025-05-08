@@ -1,0 +1,35 @@
+spring:
+  cloud:
+    aws:
+      sqs:
+        endpoint: https://sqs.us-east-2.amazonaws.com
+      dynamodb:
+        enabled: true
+        region: us-east-2
+        endpoint: https://dynamodb.us-east-2.amazonaws.com
+      credentials:
+        access-key: ${AWS_ACCESS_KEY_ID}
+        secret-key: ${AWS_SECRET_ACCESS_KEY}
+      region:
+        static: us-east-2
+blogger-service:
+  queue: blogging-timeline-queue
+server:
+  port: 8085
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+      base-path: /actuator
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+      group:
+        readiness:
+          include: readinessState
+        liveness:
+          include: livenessState

@@ -1,0 +1,2 @@
+app:
+  queue-name: blogging-timeline-queue

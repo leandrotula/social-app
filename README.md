@@ -1,0 +1,1 @@
+# Small blogger service app
