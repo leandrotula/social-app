@@ -1,2 +1,18 @@
-app:
-  queue-name: blogging-timeline-queue
+spring:
+  cloud:
+    aws:
+      sqs:
+        endpoint: https://sqs.us-east-2.amazonaws.com
+      dynamodb:
+        enabled: true
+        region: us-east-2
+        endpoint: https://dynamodb.us-east-2.amazonaws.com
+      credentials:
+        access-key: "test"
+        secret-key: "test"
+      region:
+        static: us-east-2
+blogger-service:
+  queue: blogging-timeline-queue
+server:
+  port: 8085
