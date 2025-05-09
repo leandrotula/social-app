@@ -1,0 +1,31 @@
+version: '3.1'
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=dynamodb,sqs,s3
+      - DEFAULT_REGION=us-east-2
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DEBUG=1
+      - PERSISTENCE=1
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  spring-app:
+    build: .
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_REGION=us-east-2
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_CBOR_DISABLE=1
+    depends_on:
+      - localstack
